@@ -1,4 +1,4 @@
-import { ADD_SYNC_POST } from "./../constants";
+import { ADD_SYNC_POST, ADD_ASYNC_POST } from "./../constants";
 
 const initialState = {
   syncPosts: [],
@@ -12,6 +12,8 @@ const postReducer = (state = initialState, action) => {
         ...state,
         syncPosts: [...state.syncPosts, action.payload],
       };
+    case ADD_ASYNC_POST:
+      return { ...state, asyncPosts: [...action.payload] };
     default:
       return state;
   }

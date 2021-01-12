@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Collapse } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addSyncPost } from "./../redux/postActions";
 
 const AddForm = ({ addPost }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [open, setOpen] = useState(false);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     if (!title.trim()) {
+      setOpen(true);
       return;
+    } else {
+      setOpen(false);
     }
     const post = { title, body };
     addPost(post);
@@ -38,12 +42,14 @@ const AddForm = ({ addPost }) => {
           value={title}
           onInput={titleInputHandler}
         />
-        <Form.Text
-          className={` ${title.trim() ? "text-muted" : "text-danger"} `}
-          name="title"
-        >
-          Title is required.
-        </Form.Text>
+        <Collapse in={open}>
+          <Form.Text
+            className={` ${title.trim() ? "text-muted" : "text-danger"} `}
+            name="title"
+          >
+            Title is required.
+          </Form.Text>
+        </Collapse>
       </Form.Group>
 
       <Form.Group>
